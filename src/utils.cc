@@ -27,7 +27,7 @@ double generateRandomNumber(double high = 1, double low = -1)
 {
 
     if(high < low){
-        throw std::runtime_error("HIGH IS LOWER THAN LOW");
+        throw std::runtime_error(std::to_string(high) + " is lower than " + std::to_string(low));
     }
 
     // random device class instance, source of 'true' randomness for initializing random seed
@@ -42,34 +42,36 @@ double generateRandomNumber(double high = 1, double low = -1)
     return (((double)(rand()) / (RAND_MAX)) * (high - low) + low);
 }
 
-std::vector<double> generateRandomNumberVector(int size, double high = 1, double low = -1){
-    std::vector<double> v;
+double* generateRandomNumbers(int size, double high = 1, double low = -1){
+    double v[size];
     for(int i = 0; i < size; i++){
-        v.push_back(generateRandomNumber(high, low));
+        v[i] = generateRandomNumber(high, low);
     }
     return v;
 }
 
-std::vector<std::vector<double>> generateWeights(int layer_1_size, int layer_2_size, WeightGenerationType type, double weight = 0)
+double** generateWeights(int layer_1_size, int layer_2_size, WeightGenerationType type, double weight = 0)
 {
-    std::vector<std::vector<double>> weights;
+    double** weights;
     switch (type)
     {
     case WeightGenerationType::RANDOM:
         for (int i = 0; i < layer_1_size; i++)
         {
-            weights.push_back(generateRandomNumberVector(layer_2_size, 2, -2));
+            weights[i] = generateRandomNumbers(layer_2_size, 2, -2);
+         
         }
         break;
     case WeightGenerationType::FIXED:
         for (int i = 0; i < layer_1_size; i++)
         {
-            weights.push_back(std::vector<double>());
             for (int b = 0; b < layer_2_size; b++)
             {
-                weights.at(i).push_back(weight);
+                weights[i][b] = (weight);
             }
         }
+        assert(weights[0][0] == weight);
+        assert(weights[layer_1_size-1][layer_2_size-1] == weight);
         break;
 
     default:

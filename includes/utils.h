@@ -27,9 +27,9 @@ enum WeightGenerationType{
   
 };
 
-std::vector<std::vector<double>> generateWeights(int layer_1_size, int layer_2_size, WeightGenerationType type, double weight = 0);
+double** generateWeights(int layer_1_size, int layer_2_size, WeightGenerationType type, double weight = 0);
 
-std::vector<double> generateRandomNumberVector(int size, double high = 1, double low = -1);
+double* generateRandomNumbers(int size, double high = 1, double low = -1);
 long long now();
 double computeError(double _true, double _pred);
 

@@ -15,7 +15,7 @@ public:
     // This will connect one layer to another
     void ConnectLayer(NeuralLayer* other, WeightGenerationType weightGenerationType);
     void ConnectLayer(NeuralLayer* other);
-    void ConnectLayer(NeuralLayer* other, std::vector<std::vector<double>> weights);
+    void ConnectLayer(NeuralLayer* other, double** weights);
     
     // This will return the neurons from the layer
     std::vector<Neuron>& GetNeurons();
@@ -26,10 +26,10 @@ public:
     // This will return the values of the neurons in the layer
     std::string ValuesToString();
 
-    void SetWeights(std::vector<std::vector<double>> weights);
+    void SetWeights(double** weights);
     void SetActivationFunction(ActivationFunction activationFunction);
 
-    void NeuralLayer::SetBiases(std::vector<double> baises);
+    void NeuralLayer::SetBiases(double baises[]);
     
     // This will return the size of the layer
     int GetLayerSize();
@@ -38,10 +38,10 @@ public:
     void operator()(NeuralLayer* otherLayer);
 
     // This will run the function SetInput, if the variabled passed into it is a vector of doubles
-    void operator()(std::vector<double> input);
+    void operator()(double input[]);
 
     // This will the set the neurons of the function's value to be equal to the input
-    void SetInput(std::vector<double> input);
+    void SetInput(double input[]);
 
     NeuralLayer *GetPrevious();
 
@@ -64,4 +64,4 @@ private:
     NeuralLayer *m_previous = NULL;
 };
 
-std::vector<std::vector<double>> generateWeights(NeuralLayer layer_1, NeuralLayer layer_2, WeightGenerationType type, double weight = 0);
+double** generateWeights(NeuralLayer layer_1, NeuralLayer layer_2, WeightGenerationType type, double weight = 0);

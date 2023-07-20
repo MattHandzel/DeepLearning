@@ -13,7 +13,7 @@
 // n.SetValue(5);
 // n2.AddConnection(n, 5);
 // n2.ProcessData();
-// assert(n2.GetValue() == n2.GetConnections().at(0).second * n.GetValue() + n2.GetBias());
+// assert(n2.GetValue() == n2.GetConnections()[0].second * n.GetValue() + n2.GetBias());
 // n3.AddConnection(n2, -0.1);
 
 NeuralLayer layer = NeuralLayer(1);
@@ -23,12 +23,12 @@ NeuralLayer output = NeuralLayer(1);
 struct RunData
 {
   double error;
-  std::vector<std::vector<std::vector<double>>> weights{};
-  std::vector<ActivationFunction> functions{};
-  std::vector<std::vector<double>> biases{};
+  double*** weights{};
+  ActivationFunction* functions{};
+  double** biases{};
 };
 
-RunData runRun(std::vector<double> trainData, std::vector<double> trainLabels, RunData bestRun)
+RunData runRun(double trainData[], double trainLabels[], RunData bestRun)
 {
   // n3.ProcessData();
   NeuralLayer layer = NeuralLayer(1);
@@ -48,37 +48,32 @@ RunData runRun(std::vector<double> trainData, std::vector<double> trainLabels, R
 
   RunData currentRun;
   currentRun.error = 0;
-  currentRun.weights.clear();
-  currentRun.functions.clear();
-  currentRun.biases.clear();
 
-  currentRun.functions.push_back(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(10, -10)}}));
-  currentRun.functions.push_back(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(10, -10)}}));
-  currentRun.weights.push_back(generateWeights(layer2, layer, WeightGenerationType::RANDOM));
-  currentRun.weights.push_back(generateWeights(layer3, layer2, WeightGenerationType::RANDOM));
+  currentRun.functions[0] = (ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(10, -10)}}));
+  currentRun.functions[1] = (ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(10, -10)}}));
+  currentRun.weights[0] = (generateWeights(layer2, layer, WeightGenerationType::RANDOM));
+  currentRun.weights[1] = (generateWeights(layer3, layer2, WeightGenerationType::RANDOM));
 
-  currentRun.biases.push_back(generateRandomNumberVector(layer2.GetLayerSize(), 10, -10));
-  currentRun.biases.push_back(generateRandomNumberVector(layer3.GetLayerSize(), 10, -10));
+  currentRun.biases[0] = (generateRandomNumbers(layer2.GetLayerSize(), 10, -10));
+  currentRun.biases[1] = (generateRandomNumbers(layer3.GetLayerSize(), 10, -10));
 
-  assert(currentRun.weights.size() == 2);
+  layer2.SetActivationFunction(currentRun.functions[0]);
+  layer3.SetActivationFunction(currentRun.functions[1]);
 
-  layer2.SetActivationFunction(currentRun.functions.at(0));
-  layer3.SetActivationFunction(currentRun.functions.at(1));
+  layer2.SetWeights(currentRun.weights[0]);
+  layer3.SetWeights(currentRun.weights[1]);
 
-  layer2.SetWeights(currentRun.weights.at(0));
-  layer3.SetWeights(currentRun.weights.at(1));
+  layer2.SetBiases(currentRun.biases[0]);
+  layer3.SetBiases(currentRun.biases[1]);
 
-  layer2.SetBiases(currentRun.biases.at(0));
-  layer3.SetBiases(currentRun.biases.at(1));
-
-  for (int i = 0; i < trainData.size(); i++)
+  for (int i = 0; i < sizeof(trainData) / sizeof(trainData[0]); i++)
   {
-    layer.SetInput(std::vector<double>{trainData.at(i)});
+    layer.SetInput(new double{trainData[i]});
     layer2.ProcessLayer();
     layer3.ProcessLayer();
     output.ProcessLayer();
 
-    currentRun.error += computeError(trainLabels.at(i), output.GetNeurons().at(0).GetValue()) / trainData.size();
+    currentRun.error += computeError(trainLabels[i], output.GetNeurons()[0].GetValue()) / (sizeof(trainData) / sizeof(trainData[0]));
     if(currentRun.error > bestRun.error){
       return bestRun;
     }
@@ -86,7 +81,7 @@ RunData runRun(std::vector<double> trainData, std::vector<double> trainLabels, R
   return currentRun;
 }
 
-RunData runRuns(int nRuns, std::vector<double> trainData, std::vector<double> trainLabels)
+RunData runRuns(int nRuns, double trainData[], double trainLabels[])
 {
   RunData bestRun;
   bestRun.error = 14214124214124124.;
@@ -116,17 +111,18 @@ int main(int argc, char *argv[])
   RunData bestRun;
 
   int nLayers = 2;
+  int dataSize = 10;
 
-  std::vector<double> trainData;
-  for (int i = 0; i < 10; i++)
+  double trainData[dataSize];
+  for (int i = 0; i < dataSize; i++)
   {
-    trainData.push_back(i);
+    trainData[i] = (i);
   }
 
-  std::vector<double> trainLabels; //{0, , 0, 1, 0, 1, 0, 1, 0};
-  for (int i = 0; i < trainData.size(); i++)
+  double trainLabels[dataSize]; //{0, , 0, 1, 0, 1, 0, 1, 0};
+  for (int i = 0; i < 10; i++)
   {
-    trainLabels.push_back(pow(trainData.at(i), 2));
+    trainLabels[i] = (pow(trainData[i], 2));
   }
   layer.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   output.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}}));
@@ -135,12 +131,12 @@ int main(int argc, char *argv[])
 
   layer2.ConnectLayer(&layer, generateWeights(layer2, layer, WeightGenerationType::RANDOM, 1));
   layer3.ConnectLayer(&layer2, generateWeights(layer3, layer2, WeightGenerationType::RANDOM, 1));
+  return 0;
 
   output.ConnectLayer(&layer3, generateWeights(output, layer2, WeightGenerationType::FIXED, 1));
-
-  std::vector<std::vector<std::vector<double>>> currentWeights;
-  std::vector<ActivationFunction> currentFunctions;
-  std::vector<std::vector<double>> currentBiases;
+  double*** currentWeights;
+  ActivationFunction* currentFunctions;
+  double** currentBiases;
 
   long long s_t = now();
 
@@ -153,17 +149,17 @@ int main(int argc, char *argv[])
   // for (int i = 0; i < n_threads; i++)
   // {
   //   promises.push_back(std::promise<RunData>());
-  //   futures.push_back(promises.at(i).get_future());
+  //   futures.push_back(promises[i].get_future());
   //   threads.push_back(std::thread([&promises, trainData, trainLabels, i, runs, n_threads]()
   //                                 {
   //       RunData result = runRuns(runs / n_threads, trainData, trainLabels);
-  //       promises.at(i).set_value(result); }));
+  //       promises[i].set_value(result); }));
 
   // }
 
   // for (int i = 0; i < n_threads; i++)
   // {
-  //   RunData result = futures.at(i).get();
+  //   RunData result = futures[i].get();
   //   if (result.error < bestRun.error)
   //   {
   //     bestRun = result;
@@ -175,27 +171,27 @@ int main(int argc, char *argv[])
   long long e_t = now();
   std::cout << "Best error was " << bestRun.error << " and it took " << (e_t - s_t) / 1e6 << " milliseconds" << std::endl;
   currentWeights = bestRun.weights;
-  layer2.SetWeights(currentWeights.at(0));
-  layer3.SetWeights(currentWeights.at(1));
+  layer2.SetWeights(currentWeights[0]);
+  layer3.SetWeights(currentWeights[1]);
 
-  layer2.SetActivationFunction(bestRun.functions.at(0));
-  layer3.SetActivationFunction(bestRun.functions.at(1));
+  layer2.SetActivationFunction(bestRun.functions[0]);
+  layer3.SetActivationFunction(bestRun.functions[1]);
 
-  layer2.SetBiases(bestRun.biases.at(0));
-  layer3.SetBiases(bestRun.biases.at(1));
+  layer2.SetBiases(bestRun.biases[0]);
+  layer3.SetBiases(bestRun.biases[1]);
   double testError = 0;
-  for (int i = 0; i < trainData.size(); i++)
+  for (int i = 0; i < dataSize; i++)
   {
-    layer.SetInput(std::vector<double>{trainData.at(i)});
+    layer.SetInput(new double{trainData[i]});
     layer2.ProcessLayer();
     layer3.ProcessLayer();
     output.ProcessLayer();
-    testError += computeError(trainLabels.at(i), output.GetNeurons().at(0).GetValue()) / trainData.size();
-    std::cout << "Input:\t" << trainData.at(i) << "\tOutput:\t" << output.GetNeurons().at(0).GetValue() << std::endl;
+    testError += computeError(trainLabels[i], output.GetNeurons()[0].GetValue()) / dataSize;
+    std::cout << "Input:\t" << trainData[i] << "\tOutput:\t" << output.GetNeurons()[0].GetValue() << std::endl;
   }
   // assert(testError == bestRun.error);
   // for(int i = 0; i < n_threads; i++){
-  //   threads.at(i).join();
+  //   threads[i].join();
 
   // }
   return 0;

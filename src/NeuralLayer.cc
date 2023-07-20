@@ -29,12 +29,12 @@ void NeuralLayer::ProcessLayer()
     }
 }
 
-void NeuralLayer::SetInput(std::vector<double> input)
+void NeuralLayer::SetInput(double input[])
 {
     // If the size of the input is not the same as the layer size then it will throw an exception
-    if (input.size() != m_layerSize)
+    if ((sizeof(input)/sizeof(*input)) != m_layerSize)
     {
-        throw std::invalid_argument("Input (size: " + std::to_string(input.size()) + " )" + "must be equal in size to layer size (size: " + std::to_string(m_layerSize) + ") ");
+        throw std::invalid_argument("Input (size: " + std::to_string((sizeof(input)/sizeof(*input))) + " )" + "must be equal in size to layer size (size: " + std::to_string(m_layerSize) + ") ");
     }
 
     // Set the value of the neurons in the layer to the inputs
@@ -57,7 +57,7 @@ void NeuralLayer::ConnectLayer(NeuralLayer* other){
     this->ConnectLayer(other, m_weightGenerationType);
 }
 
-void NeuralLayer::ConnectLayer(NeuralLayer* other, std::vector<std::vector<double>> weights)
+void NeuralLayer::ConnectLayer(NeuralLayer* other, double** weights)
 {
     assert(m_activationFunctionSet);
     this->m_previous = other;
@@ -70,28 +70,29 @@ void NeuralLayer::ConnectLayer(NeuralLayer* other, std::vector<std::vector<doubl
     {
         for (int b = 0; b < other->GetLayerSize(); b++)
         {
-            m_neurons.at(i).AddConnection(std::pair<Neuron *, double>(&(other->m_neurons.at(b)), weights.at(i).at(b))); // generateRandomNumber(1, -1)
+            m_neurons.at(i).AddConnection(std::pair<Neuron *, double>(&(other->m_neurons.at(b)), weights[i][b])); // generateRandomNumber(1, -1)
         }
     }
 }
 
-void NeuralLayer::SetWeights(std::vector<std::vector<double>> weights){
-    if(weights.size() != m_layerSize || weights.at(0).size() != m_previous->GetLayerSize()){
-        throw std::invalid_argument("Weight dimensions are " + std::to_string(weights.size()) + "x" + std::to_string(weights.at(0).size()) + " when they should be" + std::to_string(m_layerSize) + "x" + std::to_string(m_previous->GetLayerSize()));
-    }
+void NeuralLayer::SetWeights(double** weights){
+    // if((sizeof(weights)/sizeof(*weights)) != m_layerSize || (sizeof(weights[0])/sizeof(*weights[0])) != m_previous->GetLayerSize()){
+    //     throw std::invalid_argument("Weight dimensions are " + std::to_string((sizeof(weights)/sizeof(*weights))) + "x" + std::to_string(sizeof(weights[0])/sizeof(*weights[0])) + " when they should be" + std::to_string(m_layerSize) + "x" + std::to_string(m_previous->GetLayerSize()));
+    // }
     for (int i = 0; i < m_layerSize; i++)
     {
         for (int b = 0; b < m_previous->GetLayerSize(); b++)
         {
-            m_neurons.at(i).SetWeight(b, weights.at(i).at(b)); // generateRandomNumber(1, -1)
+            m_neurons.at(i).SetWeight(b, weights[i][b]); // generateRandomNumber(1, -1)
+            assert(weights[i][b] > -100 && weights[i][b] < 100);
             
         }
     }
 }
 
-void NeuralLayer::SetBiases(std::vector<double> baises){
+void NeuralLayer::SetBiases(double baises[]){
     for(int i = 0; i < m_layerSize; i++){
-        m_neurons.at(i).SetBias(baises.at(i));
+        m_neurons.at(i).SetBias(baises[i]);
     }
 }
 
@@ -124,7 +125,7 @@ void NeuralLayer::operator()(NeuralLayer* otherLayer)
     this->ConnectLayer(otherLayer);
 }
 
-void NeuralLayer::operator()(std::vector<double> input)
+void NeuralLayer::operator()(double input[])
 {
     // If there is another layer before this layer, then set the input of that layer to the passed inputs
     if (m_previous != NULL)
@@ -164,6 +165,6 @@ int sumConnections(NeuralLayer layer)
     return sum;
 }
 
-std::vector<std::vector<double>> generateWeights(NeuralLayer layer_1, NeuralLayer layer_2, WeightGenerationType type, double weight = 0){
+double** generateWeights(NeuralLayer layer_1, NeuralLayer layer_2, WeightGenerationType type, double weight = 0){
     return generateWeights(layer_1.GetLayerSize(), layer_2.GetLayerSize(), type, weight);
 }
