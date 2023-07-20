@@ -17,8 +17,8 @@
 // n3.AddConnection(n2, -0.1);
 
 NeuralLayer layer = NeuralLayer(1);
-NeuralLayer layer2 = NeuralLayer(5);
-NeuralLayer layer3 = NeuralLayer(5);
+NeuralLayer layer2 = NeuralLayer(3);
+NeuralLayer layer3 = NeuralLayer(3);
 NeuralLayer output = NeuralLayer(1);
 struct RunData
 {
@@ -32,8 +32,8 @@ RunData runRun(std::vector<double> trainData, std::vector<double> trainLabels, R
 {
   // n3.ProcessData();
   NeuralLayer layer = NeuralLayer(1);
-  NeuralLayer layer2 = NeuralLayer(5);
-  NeuralLayer layer3 = NeuralLayer(5);
+  NeuralLayer layer2 = NeuralLayer(3);
+  NeuralLayer layer3 = NeuralLayer(3);
   NeuralLayer output = NeuralLayer(1);
   layer.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   output.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}}));
@@ -52,13 +52,13 @@ RunData runRun(std::vector<double> trainData, std::vector<double> trainLabels, R
   currentRun.functions.clear();
   currentRun.biases.clear();
 
-  currentRun.functions.push_back(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(10, -10)}}));
-  currentRun.functions.push_back(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(10, -10)}}));
+  currentRun.functions.push_back(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(2, -2)}}));
+  currentRun.functions.push_back(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", generateRandomNumber(2, -2)}}));
   currentRun.weights.push_back(generateWeights(layer2, layer, WeightGenerationType::RANDOM));
   currentRun.weights.push_back(generateWeights(layer3, layer2, WeightGenerationType::RANDOM));
 
-  currentRun.biases.push_back(generateRandomNumberVector(layer2.GetLayerSize(), 10, -10));
-  currentRun.biases.push_back(generateRandomNumberVector(layer3.GetLayerSize(), 10, -10));
+  currentRun.biases.push_back(generateRandomNumberVector(layer2.GetLayerSize(), 2, -2));
+  currentRun.biases.push_back(generateRandomNumberVector(layer3.GetLayerSize(), 2, -2));
 
   assert(currentRun.weights.size() == 2);
 
@@ -117,17 +117,17 @@ int main(int argc, char *argv[])
 
   int nLayers = 2;
 
-  std::vector<double> trainData;
-  for (int i = 0; i < 10; i++)
-  {
-    trainData.push_back(i);
-  }
+  std::vector<double> trainData{0, 1, 3, 4, 6, 8, 10};
+  // for (int i = 0; i < 10; i++)
+  // {
+  //   trainData.push_back(i);
+  // }
 
-  std::vector<double> trainLabels; //{0, , 0, 1, 0, 1, 0, 1, 0};
-  for (int i = 0; i < trainData.size(); i++)
-  {
-    trainLabels.push_back(pow(trainData.at(i), 2));
-  }
+  std::vector<double> trainLabels{-5, 0, -5, 4, 2.5, 9, 9}; //{0, , 0, 1, 0, 1, 0, 1, 0};
+  // for (int i = 0; i < trainData.size(); i++)
+  // {
+  //   trainLabels.push_back(pow(trainData.at(i), 2));
+  // }
   layer.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   output.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer2.SetActivationFunction(ActivationFunction(ActivationFunctionTypes::RELU, std::map<std::string, double>{{"slope", 1}, {"x-intercept", 100}}));
@@ -150,27 +150,27 @@ int main(int argc, char *argv[])
   std::vector<std::future<RunData>> futures;
   std::vector<std::thread> threads;
 
-  // for (int i = 0; i < n_threads; i++)
-  // {
-  //   promises.push_back(std::promise<RunData>());
-  //   futures.push_back(promises.at(i).get_future());
-  //   threads.push_back(std::thread([&promises, trainData, trainLabels, i, runs, n_threads]()
-  //                                 {
-  //       RunData result = runRuns(runs / n_threads, trainData, trainLabels);
-  //       promises.at(i).set_value(result); }));
+  for (int i = 0; i < n_threads; i++)
+  {
+    promises.push_back(std::promise<RunData>());
+    futures.push_back(promises.at(i).get_future());
+    threads.push_back(std::thread([&promises, trainData, trainLabels, i, runs, n_threads]()
+                                  {
+        RunData result = runRuns(runs / n_threads, trainData, trainLabels);
+        promises.at(i).set_value(result); }));
 
-  // }
+  }
 
-  // for (int i = 0; i < n_threads; i++)
-  // {
-  //   RunData result = futures.at(i).get();
-  //   if (result.error < bestRun.error)
-  //   {
-  //     bestRun = result;
-  //     // std::cout << "Run " << runNumber << " had an error of " << currentRun.error << std::endl;
-  //   }
-  // }
-  bestRun = runRuns(runs, trainData, trainLabels);
+  for (int i = 0; i < n_threads; i++)
+  {
+    RunData result = futures.at(i).get();
+    if (result.error < bestRun.error)
+    {
+      bestRun = result;
+      // std::cout << "Run " << runNumber << " had an error of " << currentRun.error << std::endl;
+    }
+  }
+  // bestRun = runRuns(runs, trainData, trainLabels);
 
   long long e_t = now();
   std::cout << "Best error was " << bestRun.error << " and it took " << (e_t - s_t) / 1e6 << " milliseconds" << std::endl;
@@ -193,11 +193,16 @@ int main(int argc, char *argv[])
     testError += computeError(trainLabels.at(i), output.GetNeurons().at(0).GetValue()) / trainData.size();
     std::cout << "Input:\t" << trainData.at(i) << "\tOutput:\t" << output.GetNeurons().at(0).GetValue() << std::endl;
   }
-  // assert(testError == bestRun.error);
-  // for(int i = 0; i < n_threads; i++){
-  //   threads.at(i).join();
 
-  // }
+  for(int i= 0; i < layer2.GetLayerSize(); i++){
+    std::cout << layer2.GetNeurons().at(i).ConnectionsToString() << std::endl;
+  }
+
+  assert(testError == bestRun.error);
+  for(int i = 0; i < n_threads; i++){
+    threads.at(i).join();
+
+  }
   return 0;
 }
 // 1.3 s -> no multithreading; 0.6 -> threading

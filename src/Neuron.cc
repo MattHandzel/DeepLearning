@@ -87,7 +87,7 @@ std::string Neuron::ConnectionsToString()
   std::string message = "CONNECTIONS:\n";
   int i = 0;
   for(std::pair<Neuron *, double> connection : m_connections){
-    std::cout << "Neuron address of " << connection.first << " has a value of " << connection.first->GetValue() << " and the weight is" << connection.second << std::endl;
+    std::cout << "Neuron address of " << connection.first << " has a value of " << connection.first->GetValue() << " and the weight is " << connection.second << std::endl;
   }
   //! This can break if the size of m_connections is super big for some reason
   return message;
