@@ -47,9 +47,9 @@ double Neuron::GetValue()
 // This will prcoess data
 void Neuron::ProcessData()
 {
-  if(m_connections.size() == 0){
-    throw std::logic_error("You have no connections on this neuron.");
-  }
+  // if(m_connections.size() == 0){
+  //   throw std::logic_error("You have no connections on this neuron.");
+  // }
 
   m_value = m_bias;
   
