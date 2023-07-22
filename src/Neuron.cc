@@ -34,7 +34,7 @@ void Neuron::SetActivationFunction(ActivationFunction func)
 }
 
 // this will return the value, THE DATA IS NOT PROCESSED HERE
-double Neuron::GetValue()
+double& Neuron::GetValue()
 {
 
   // ! The connection size, for some reason, is huge

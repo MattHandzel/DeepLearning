@@ -22,7 +22,7 @@ class Neuron{
     void SetActivationFunction(ActivationFunction func);
 
     // Returns the value of the neuron
-    double GetValue();
+    double& GetValue();
     double GetBias();
 
     // TODO:: Make sure that all of the instances of GetValue() are now ProcessData()
