@@ -82,3 +82,12 @@ std::vector<std::vector<double>> generateWeights(int layer_1_size, int layer_2_s
 double computeError(double _true, double _pred){
     return pow(_true - _pred, 2);
 }
+
+double computeError(std::vector<double> _true, std::vector<double> _pred){
+    double error = 0;
+    for(int i =0; i < _true.size(); i++){
+        error += pow(_true.at(i) - _pred.at(i), 2);
+    }
+    return error / _true.size();
+    
+}

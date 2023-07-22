@@ -2,7 +2,7 @@
 #include <functional>
 #include <math.h>
 
-ActivationFunction::ActivationFunction(ActivationFunctionTypes type, std::map<std::string, double> params) : m_type(type), m_params(params){
+ActivationFunction::ActivationFunction(ActivationFunctionType type, std::map<std::string, double> params) : m_type(type), m_params(params){
     
 }
 

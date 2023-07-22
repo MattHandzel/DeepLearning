@@ -32,5 +32,6 @@ std::vector<std::vector<double>> generateWeights(int layer_1_size, int layer_2_s
 std::vector<double> generateRandomNumberVector(int size, double high = 1, double low = -1);
 long long now();
 double computeError(double _true, double _pred);
+double computeError(std::vector<double> _true, std::vector<double> _pred);
 
 #endif

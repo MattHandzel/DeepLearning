@@ -29,7 +29,8 @@ void NeuralLayer::ProcessLayer()
     }
 }
 
-void NeuralLayer::SetInput(std::vector<double> input)
+
+void NeuralLayer::SetInput(const std::vector<double>& input)
 {
     // If the size of the input is not the same as the layer size then it will throw an exception
     if (input.size() != m_layerSize)
@@ -50,17 +51,26 @@ std::vector<Neuron> &NeuralLayer::GetNeurons()
     return m_neurons;
 }
 
-void NeuralLayer::ConnectLayer(NeuralLayer* other, WeightGenerationType weightGenerationType){
-    this->ConnectLayer(other, generateWeights(this->GetLayerSize(), other->GetLayerSize(), this->m_weightGenerationType));
+std::vector<double> NeuralLayer::GetValues(){
+    std::vector<double> values;
+    for(int i = 0; i < m_neurons.size(); i++){
+        values.push_back(m_neurons.at(i).GetValue());
+    }
+    return values;
 }
-void NeuralLayer::ConnectLayer(NeuralLayer* other){
+
+
+void NeuralLayer::ConnectLayer(NeuralLayer& other, const WeightGenerationType& weightGenerationType){
+    this->ConnectLayer(other, generateWeights(GetLayerSize(), other.GetLayerSize(), m_weightGenerationType));
+}
+void NeuralLayer::ConnectLayer(NeuralLayer& other){
     this->ConnectLayer(other, m_weightGenerationType);
 }
 
-void NeuralLayer::ConnectLayer(NeuralLayer* other, std::vector<std::vector<double>> weights)
+void NeuralLayer::ConnectLayer(NeuralLayer& other, const std::vector<std::vector<double>>& weights)
 {
     assert(m_activationFunctionSet);
-    this->m_previous = other;
+    this->m_previous = &other;
 
     // Change the weight value here, default to 1, you might wanna make it random, i dunno how this stuff works
     // double weightValue = generateRandomNumber(1, -1);
@@ -68,14 +78,14 @@ void NeuralLayer::ConnectLayer(NeuralLayer* other, std::vector<std::vector<doubl
     //  For each neuron in this layer, connect it to the neuron in the other layer
     for (int i = 0; i < m_layerSize; i++)
     {
-        for (int b = 0; b < other->GetLayerSize(); b++)
+        for (int b = 0; b < other.GetLayerSize(); b++)
         {
-            m_neurons.at(i).AddConnection(std::pair<Neuron *, double>(&(other->m_neurons.at(b)), weights.at(i).at(b))); // generateRandomNumber(1, -1)
+            m_neurons.at(i).AddConnection(std::pair<Neuron *, double>(&(other.m_neurons.at(b)), weights.at(i).at(b))); // generateRandomNumber(1, -1)
         }
     }
 }
 
-void NeuralLayer::SetWeights(std::vector<std::vector<double>> weights){
+void NeuralLayer::SetWeights(const std::vector<std::vector<double>>& weights){
     if(weights.size() != m_layerSize || weights.at(0).size() != m_previous->GetLayerSize()){
         throw std::invalid_argument("Weight dimensions are " + std::to_string(weights.size()) + "x" + std::to_string(weights.at(0).size()) + " when they should be" + std::to_string(m_layerSize) + "x" + std::to_string(m_previous->GetLayerSize()));
     }
@@ -89,7 +99,7 @@ void NeuralLayer::SetWeights(std::vector<std::vector<double>> weights){
     }
 }
 
-void NeuralLayer::SetBiases(std::vector<double> baises){
+void NeuralLayer::SetBiases(const std::vector<double>& baises){
     for(int i = 0; i < m_layerSize; i++){
         m_neurons.at(i).SetBias(baises.at(i));
     }
@@ -119,12 +129,12 @@ std::string NeuralLayer::ConnectionsToString()
     return message;
 }
 
-void NeuralLayer::operator()(NeuralLayer* otherLayer)
+void NeuralLayer::operator()(NeuralLayer& otherLayer)
 {
     this->ConnectLayer(otherLayer);
 }
 
-void NeuralLayer::operator()(std::vector<double> input)
+void NeuralLayer::operator()(const std::vector<double>& input)
 {
     // If there is another layer before this layer, then set the input of that layer to the passed inputs
     if (m_previous != NULL)
@@ -149,12 +159,13 @@ std::string NeuralLayer::ValuesToString()
     return message;
 }
 
-NeuralLayer *NeuralLayer::GetPrevious()
+NeuralLayer& NeuralLayer::GetPrevious()
 {
-    return m_previous;
+    return *m_previous;
 }
 
-int sumConnections(NeuralLayer layer)
+// Find the total connections a layer has
+int sumConnections(NeuralLayer& layer)
 {
     int sum = 0;
     for (int i = 0; i < layer.GetLayerSize(); i++)
@@ -164,6 +175,6 @@ int sumConnections(NeuralLayer layer)
     return sum;
 }
 
-std::vector<std::vector<double>> generateWeights(NeuralLayer layer_1, NeuralLayer layer_2, WeightGenerationType type, double weight = 0){
+std::vector<std::vector<double>> generateWeights(NeuralLayer& layer_1, NeuralLayer& layer_2, WeightGenerationType& type, double weight = 0){
     return generateWeights(layer_1.GetLayerSize(), layer_2.GetLayerSize(), type, weight);
 }

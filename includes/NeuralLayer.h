@@ -1,3 +1,5 @@
+#ifndef NEURALLAYER
+#define NEURALLAYER
 #include "Neuron.h"
 
 class NeuralLayer
@@ -13,9 +15,9 @@ public:
     void ProcessLayer();
 
     // This will connect one layer to another
-    void ConnectLayer(NeuralLayer* other, WeightGenerationType weightGenerationType);
-    void ConnectLayer(NeuralLayer* other);
-    void ConnectLayer(NeuralLayer* other, std::vector<std::vector<double>> weights);
+    void ConnectLayer(NeuralLayer& other, const WeightGenerationType& weightGenerationType);
+    void ConnectLayer(NeuralLayer& other);
+    void ConnectLayer(NeuralLayer& other, const std::vector<std::vector<double>>& weights);
     
     // This will return the neurons from the layer
     std::vector<Neuron>& GetNeurons();
@@ -26,31 +28,32 @@ public:
     // This will return the values of the neurons in the layer
     std::string ValuesToString();
 
-    void SetWeights(std::vector<std::vector<double>> weights);
+    void SetWeights(const std::vector<std::vector<double>>& weights);
     void SetActivationFunction(ActivationFunction activationFunction);
 
-    void NeuralLayer::SetBiases(std::vector<double> baises);
+    void NeuralLayer::SetBiases(const std::vector<double>& baises);
     
     // This will return the size of the layer
     int GetLayerSize();
-
+    std::vector<double> GetValues();
+    
     // This will run the function ConnectLayer if another layer is passed into it, but it allows me to use () which is what tensorflow does and i like that
-    void operator()(NeuralLayer* otherLayer);
+    void operator()(NeuralLayer& otherLayer);
 
     // This will run the function SetInput, if the variabled passed into it is a vector of doubles
-    void operator()(std::vector<double> input);
+    void operator()(const std::vector<double>& input);
 
     // This will the set the neurons of the function's value to be equal to the input
-    void SetInput(std::vector<double> input);
+    void SetInput(const std::vector<double>& input);
 
-    NeuralLayer *GetPrevious();
+    NeuralLayer &GetPrevious();
 
 private:
     // m_layerSize is the size of the layer which determines the number of neurons
     int m_layerSize;
 
     // activationFunction is the activation function used for the neurons in the entire layer
-    ActivationFunction m_activationFunction = ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}});
+    ActivationFunction m_activationFunction = ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}});
     bool m_activationFunctionSet;
 
     WeightGenerationType m_weightGenerationType;
@@ -65,3 +68,4 @@ private:
 };
 
 std::vector<std::vector<double>> generateWeights(NeuralLayer layer_1, NeuralLayer layer_2, WeightGenerationType type, double weight = 0);
+#endif

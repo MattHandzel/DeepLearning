@@ -12,9 +12,9 @@ class Neuron{
     Neuron(double bias);
 
     // This allows neurons to connect to each other, you pass in a neuron and the value of the weight of the connection
-    void AddConnection(std::pair<Neuron*, double> connection);
+    void AddConnection(const std::pair<Neuron*, double>& connection);
     void AddConnection(Neuron neuron, double weight);
-    void AddConnections(std::vector<std::pair<Neuron*, double>> connections);
+    void AddConnections(const std::vector<std::pair<Neuron*, double>>& connections);
     void SetWeight(int index, double newWeight);
     void Neuron::SetBias(double bias);
 
@@ -59,6 +59,6 @@ class Neuron{
 
     // The activation function is the activation function that the neuron will run after it computes its value, it might be better
     //? Would storing the activation function in the layer be more efficient?
-    ActivationFunction m_activationFunction = ActivationFunction(ActivationFunctionTypes::LINEAR, std::map<std::string, double>{{"slope", 1}});
+    ActivationFunction m_activationFunction = ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}});
 };
 #endif
