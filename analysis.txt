@@ -3,43 +3,43 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  us/call  us/call  name    
-100.00      0.06     0.06   150100     0.40     0.40  Neuron::ProcessData()
-  0.00      0.06     0.00   501000     0.00     0.00  Neuron::AddConnection(std::pair<Neuron*, double> const&)
-  0.00      0.06     0.00   156118     0.00     0.00  ActivationFunction::operator()(double)
-  0.00      0.06     0.00    10518     0.00     0.00  void std::vector<double, std::allocator<double> >::_M_realloc_insert<double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double&&)
-  0.00      0.06     0.00    10510     0.00     0.00  void std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > >::_M_realloc_insert<std::pair<Neuron*, double> const&>(__gnu_cxx::__normal_iterator<std::pair<Neuron*, double>*, std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > > >, std::pair<Neuron*, double> const&)
-  0.00      0.06     0.00     4539     0.00     0.00  frame_dummy
-  0.00      0.06     0.00     4511     0.00     0.00  NeuralLayer::NeuralLayer(NeuralLayer const&)
-  0.00      0.06     0.00     3004     0.00     0.00  Neuron::SetActivationFunction(ActivationFunction)
-  0.00      0.06     0.00     1512     0.00     0.00  ActivationFunction::ActivationFunction(ActivationFunctionType, std::map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, double, std::less<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> > >)
-  0.00      0.06     0.00     1512     0.00     0.00  void std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > >::_M_realloc_insert<std::pair<Neuron*, double> >(__gnu_cxx::__normal_iterator<std::pair<Neuron*, double>*, std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > > >, std::pair<Neuron*, double>&&)
-  0.00      0.06     0.00     1512     0.00     0.00  std::_Rb_tree<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double>, std::_Select1st<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> >, std::less<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> > >::_M_get_insert_unique_pos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  0.00      0.06     0.00     1512     0.00     0.00  std::_Rb_tree<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double>, std::_Select1st<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> >, std::less<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  0.00      0.06     0.00     1507     0.00     0.00  std::ctype<char>::do_widen(char) const
-  0.00      0.06     0.00     1502     0.00     0.00  Neuron::Neuron(double)
-  0.00      0.06     0.00      400     0.00   150.00  NeuralLayer::ProcessLayer()
-  0.00      0.06     0.00      100     0.00     0.00  NeuralLayer::GetLayerSize()
-  0.00      0.06     0.00      100     0.00     0.00  NeuralLayer::SetInput(std::vector<double, std::allocator<double> > const&)
-  0.00      0.06     0.00      100     0.00     0.00  NeuralLayer::GetValues()
-  0.00      0.06     0.00      100     0.00   600.00  NeuralNetwork::operator()(double)
-  0.00      0.06     0.00      100     0.00     0.00  Neuron::SetValue(double)
-  0.00      0.06     0.00       32     0.00     0.00  void std::vector<Neuron, std::allocator<Neuron> >::_M_realloc_insert<Neuron>(__gnu_cxx::__normal_iterator<Neuron*, std::vector<Neuron, std::allocator<Neuron> > >, Neuron&&)
-  0.00      0.06     0.00       31     0.00     0.00  void std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_realloc_insert<std::vector<double, std::allocator<double> > >(__gnu_cxx::__normal_iterator<std::vector<double, std::allocator<double> >*, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > >, std::vector<double, std::allocator<double> >&&)
-  0.00      0.06     0.00       15     0.00     0.00  ActivationFunction::~ActivationFunction()
-  0.00      0.06     0.00       10     0.00     0.00  std::vector<Neuron, std::allocator<Neuron> >::~vector()
-  0.00      0.06     0.00        5     0.00     0.00  convertData(std::vector<double, std::allocator<double> >)
-  0.00      0.06     0.00        5     0.00     0.00  NeuralLayer::SetActivationFunction(ActivationFunction)
-  0.00      0.06     0.00        5     0.00     0.00  NeuralLayer::NeuralLayer(int, WeightGenerationType)
-  0.00      0.06     0.00        5     0.00     0.00  NeuralNetwork::operator()(NeuralLayer)
-  0.00      0.06     0.00        4     0.00     0.00  generateWeights(int, int, WeightGenerationType, double)
-  0.00      0.06     0.00        4     0.00     0.00  NeuralLayer::ConnectLayer(NeuralLayer&)
-  0.00      0.06     0.00        4     0.00     0.00  NeuralLayer::ConnectLayer(NeuralLayer&, WeightGenerationType const&)
-  0.00      0.06     0.00        4     0.00     0.00  NeuralLayer::ConnectLayer(NeuralLayer&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&)
-  0.00      0.06     0.00        4     0.00     0.00  void std::vector<NeuralLayer, std::allocator<NeuralLayer> >::_M_realloc_insert<NeuralLayer const&>(__gnu_cxx::__normal_iterator<NeuralLayer*, std::vector<NeuralLayer, std::allocator<NeuralLayer> > >, NeuralLayer const&)
-  0.00      0.06     0.00        2     0.00     0.00  now()
-  0.00      0.06     0.00        1     0.00     0.00  NeuralNetwork::Build()
-  0.00      0.06     0.00        1     0.00     0.00  NeuralNetwork::NeuralNetwork()
-  0.00      0.06     0.00        1     0.00     0.00  std::vector<NeuralLayer, std::allocator<NeuralLayer> >::~vector()
+100.00      0.07     0.07   150100     0.47     0.47  Neuron::ProcessData()
+  0.00      0.07     0.00   501000     0.00     0.00  Neuron::AddConnection(std::pair<Neuron*, double> const&)
+  0.00      0.07     0.00   156118     0.00     0.00  ActivationFunction::operator()(double)
+  0.00      0.07     0.00    10518     0.00     0.00  void std::vector<double, std::allocator<double> >::_M_realloc_insert<double>(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, double&&)
+  0.00      0.07     0.00    10510     0.00     0.00  void std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > >::_M_realloc_insert<std::pair<Neuron*, double> const&>(__gnu_cxx::__normal_iterator<std::pair<Neuron*, double>*, std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > > >, std::pair<Neuron*, double> const&)
+  0.00      0.07     0.00     4539     0.00     0.00  frame_dummy
+  0.00      0.07     0.00     4511     0.00     0.00  NeuralLayer::NeuralLayer(NeuralLayer const&)
+  0.00      0.07     0.00     3004     0.00     0.00  Neuron::SetActivationFunction(ActivationFunction)
+  0.00      0.07     0.00     1512     0.00     0.00  ActivationFunction::ActivationFunction(ActivationFunctionType, std::map<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, double, std::less<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> > >)
+  0.00      0.07     0.00     1512     0.00     0.00  void std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > >::_M_realloc_insert<std::pair<Neuron*, double> >(__gnu_cxx::__normal_iterator<std::pair<Neuron*, double>*, std::vector<std::pair<Neuron*, double>, std::allocator<std::pair<Neuron*, double> > > >, std::pair<Neuron*, double>&&)
+  0.00      0.07     0.00     1512     0.00     0.00  std::_Rb_tree<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double>, std::_Select1st<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> >, std::less<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> > >::_M_get_insert_unique_pos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      0.07     0.00     1512     0.00     0.00  std::_Rb_tree<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double>, std::_Select1st<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> >, std::less<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> > >::_M_get_insert_hint_unique_pos(std::_Rb_tree_const_iterator<std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const, double> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      0.07     0.00     1507     0.00     0.00  std::ctype<char>::do_widen(char) const
+  0.00      0.07     0.00     1502     0.00     0.00  Neuron::Neuron(double)
+  0.00      0.07     0.00      400     0.00   175.00  NeuralLayer::ProcessLayer()
+  0.00      0.07     0.00      100     0.00     0.00  NeuralLayer::GetLayerSize()
+  0.00      0.07     0.00      100     0.00     0.00  NeuralLayer::SetInput(std::vector<double, std::allocator<double> > const&)
+  0.00      0.07     0.00      100     0.00     0.00  NeuralLayer::GetValues()
+  0.00      0.07     0.00      100     0.00   700.00  NeuralNetwork::operator()(double)
+  0.00      0.07     0.00      100     0.00     0.00  Neuron::SetValue(double)
+  0.00      0.07     0.00       32     0.00     0.00  void std::vector<Neuron, std::allocator<Neuron> >::_M_realloc_insert<Neuron>(__gnu_cxx::__normal_iterator<Neuron*, std::vector<Neuron, std::allocator<Neuron> > >, Neuron&&)
+  0.00      0.07     0.00       31     0.00     0.00  void std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_realloc_insert<std::vector<double, std::allocator<double> > >(__gnu_cxx::__normal_iterator<std::vector<double, std::allocator<double> >*, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > >, std::vector<double, std::allocator<double> >&&)
+  0.00      0.07     0.00       15     0.00     0.00  ActivationFunction::~ActivationFunction()
+  0.00      0.07     0.00       10     0.00     0.00  std::vector<Neuron, std::allocator<Neuron> >::~vector()
+  0.00      0.07     0.00        5     0.00     0.00  convertData(std::vector<double, std::allocator<double> >)
+  0.00      0.07     0.00        5     0.00     0.00  NeuralLayer::SetActivationFunction(ActivationFunction)
+  0.00      0.07     0.00        5     0.00     0.00  NeuralLayer::NeuralLayer(int, WeightGenerationType)
+  0.00      0.07     0.00        5     0.00     0.00  NeuralNetwork::operator()(NeuralLayer)
+  0.00      0.07     0.00        4     0.00     0.00  generateWeights(int, int, WeightGenerationType, double)
+  0.00      0.07     0.00        4     0.00     0.00  NeuralLayer::ConnectLayer(NeuralLayer&)
+  0.00      0.07     0.00        4     0.00     0.00  NeuralLayer::ConnectLayer(NeuralLayer&, WeightGenerationType const&)
+  0.00      0.07     0.00        4     0.00     0.00  NeuralLayer::ConnectLayer(NeuralLayer&, std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&)
+  0.00      0.07     0.00        4     0.00     0.00  void std::vector<NeuralLayer, std::allocator<NeuralLayer> >::_M_realloc_insert<NeuralLayer const&>(__gnu_cxx::__normal_iterator<NeuralLayer*, std::vector<NeuralLayer, std::allocator<NeuralLayer> > >, NeuralLayer const&)
+  0.00      0.07     0.00        2     0.00     0.00  now()
+  0.00      0.07     0.00        1     0.00     0.00  NeuralNetwork::Build()
+  0.00      0.07     0.00        1     0.00     0.00  NeuralNetwork::NeuralNetwork()
+  0.00      0.07     0.00        1     0.00     0.00  std::vector<NeuralLayer, std::allocator<NeuralLayer> >::~vector()
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -77,12 +77,12 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 4 byte(s) for 16.67% of 0.06 seconds
+granularity: each sample hit covers 4 byte(s) for 14.29% of 0.07 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]    100.0    0.00    0.06                 main [1]
-                0.00    0.06     100/100         NeuralNetwork::operator()(double) [4]
+[1]    100.0    0.00    0.07                 main [1]
+                0.00    0.07     100/100         NeuralNetwork::operator()(double) [4]
                 0.00    0.00      15/15          ActivationFunction::~ActivationFunction() [29]
                 0.00    0.00      13/4539        frame_dummy [5]
                 0.00    0.00      10/10          std::vector<Neuron, std::allocator<Neuron> >::~vector() [30]
@@ -98,17 +98,17 @@ index % time    self  children    called     name
                 0.00    0.00       1/1           NeuralNetwork::Build() [41]
                 0.00    0.00       1/1           std::vector<NeuralLayer, std::allocator<NeuralLayer> >::~vector() [43]
 -----------------------------------------------
-                0.06    0.00  150100/150100      NeuralLayer::ProcessLayer() [3]
-[2]    100.0    0.06    0.00  150100         Neuron::ProcessData() [2]
+                0.07    0.00  150100/150100      NeuralLayer::ProcessLayer() [3]
+[2]    100.0    0.07    0.00  150100         Neuron::ProcessData() [2]
                 0.00    0.00  150100/156118      ActivationFunction::operator()(double) [12]
 -----------------------------------------------
-                0.00    0.06     400/400         NeuralNetwork::operator()(double) [4]
-[3]    100.0    0.00    0.06     400         NeuralLayer::ProcessLayer() [3]
-                0.06    0.00  150100/150100      Neuron::ProcessData() [2]
+                0.00    0.07     400/400         NeuralNetwork::operator()(double) [4]
+[3]    100.0    0.00    0.07     400         NeuralLayer::ProcessLayer() [3]
+                0.07    0.00  150100/150100      Neuron::ProcessData() [2]
 -----------------------------------------------
-                0.00    0.06     100/100         main [1]
-[4]    100.0    0.00    0.06     100         NeuralNetwork::operator()(double) [4]
-                0.00    0.06     400/400         NeuralLayer::ProcessLayer() [3]
+                0.00    0.07     100/100         main [1]
+[4]    100.0    0.00    0.07     100         NeuralNetwork::operator()(double) [4]
+                0.00    0.07     400/400         NeuralLayer::ProcessLayer() [3]
                 0.00    0.00     100/100         NeuralLayer::GetLayerSize() [23]
                 0.00    0.00     100/100         NeuralLayer::SetInput(std::vector<double, std::allocator<double> > const&) [24]
                 0.00    0.00     100/100         NeuralLayer::GetValues() [25]
