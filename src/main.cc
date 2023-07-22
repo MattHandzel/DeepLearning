@@ -17,13 +17,17 @@
 // n2.ProcessData();
 // assert(n2.GetValue() == n2.GetConnections().at(0).second * n.GetValue() + n2.GetBias());
 // n3.AddConnection(n2, -0.1);
-std::vector<std::vector<double>> convertData(std::vector<double> input){
-  std::vector<std::vector<double>> output;
-  for(int i = 0; i < input.size(); i++){
-    output.push_back(std::vector<double>{input.at(i)});
-  }
-  return output;
-}
+
+// array<array<double>> convertData(array<double> input){
+//   array<array<double>> output{1};
+//   for(int i = 0; i < input.size(); i++){
+//     array<double> temp{1};
+//     temp[0] = input[i];
+//     output[i] = temp;
+//   }
+//   return output;
+// }
+
 
 int MAX_INT = ~(1 << 31);
 int main(int argc, char *argv[])
@@ -38,34 +42,34 @@ int main(int argc, char *argv[])
 
   int nLayers = 2;
 
-  std::vector<double> trainData{0, 1, 3, 4, 6, 8, 10};
-  // for (int i = 0; i < 10; i++)
-  // {
-  //   trainData.push_back(i);
-  // }
+  array<double> trainData{100};
+  for (int i = 0; i < trainData.size(); i++)
+  {
+    trainData[i] = (i);
+  }
 
   long long s_t = now();
 
   NeuralNetwork nn = NeuralNetwork();
-  NeuralLayer layer1 = NeuralLayer(1);
-  NeuralLayer layer2 = NeuralLayer(10);
-  NeuralLayer layer3 = NeuralLayer(10);
-  NeuralLayer layer4 = NeuralLayer(10);
-  NeuralLayer layer5 = NeuralLayer(1);
-  layer1.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 5}}));
-  layer2.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 5}}));
-  layer3.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 5}}));
-  layer4.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 5}}));
-  layer5.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 5}}));
+  NeuralLayer layer1 = NeuralLayer(1, WeightGenerationType::FIXED);
+  NeuralLayer layer2 = NeuralLayer(500, WeightGenerationType::FIXED);
+  NeuralLayer layer3 = NeuralLayer(500, WeightGenerationType::FIXED);
+  NeuralLayer layer4 = NeuralLayer(500, WeightGenerationType::FIXED);
+  NeuralLayer layer5 = NeuralLayer(1, WeightGenerationType::FIXED);
+  layer1.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
+  layer2.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
+  layer3.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
+  layer4.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
+  layer5.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
 
   nn(layer1)(layer2)(layer3)(layer4)(layer5);
-  
   nn.Build();
-  std::cout << nn(convertData(trainData)[2])[0] << std::endl;
+  for(int i = 0; i < trainData.size(); i++){
+    std::cout << "Input: " << trainData.at(i) << "\tOutput: " << nn(trainData[0])[0] << std::endl;
+  }
 
   long long e_t = now();
   std::cout << "Completion time:\t" << (e_t - s_t) / 1e6 << std::endl; 
-  std::vector<double> trainLabels{-5, 0, -5, 4, 2.5, 9, 9}; //{0, , 0, 1, 0, 1, 0, 1, 0};
   return 0;
 }
 // 1.3 s -> no multithreading; 0.6 -> threading

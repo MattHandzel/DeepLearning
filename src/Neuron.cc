@@ -20,7 +20,7 @@ void Neuron::AddConnection(Neuron neuron, double value)
 }
 
 // This will add a vector of connections to the neruons connections.
-void Neuron::AddConnections(const std::vector<std::pair<Neuron*, double>>& connections){
+void Neuron::AddConnections(std::vector<std::pair<Neuron*, double>>& connections){
   // || This can probably be done better than a for each loop
   for(std::pair<Neuron*, double> connection : connections){
     m_connections.push_back(connection);

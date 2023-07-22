@@ -14,7 +14,7 @@ class Neuron{
     // This allows neurons to connect to each other, you pass in a neuron and the value of the weight of the connection
     void AddConnection(const std::pair<Neuron*, double>& connection);
     void AddConnection(Neuron neuron, double weight);
-    void AddConnections(const std::vector<std::pair<Neuron*, double>>& connections);
+    void AddConnections(std::vector<std::pair<Neuron*, double>>& connections);
     void SetWeight(int index, double newWeight);
     void Neuron::SetBias(double bias);
 

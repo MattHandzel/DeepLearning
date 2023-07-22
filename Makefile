@@ -4,6 +4,7 @@ exec: ./bin/main
 
 ./bin/main: ./src/main.cc ./src/Neuron.cc ./src/ActivationFunction.cc ./src/NeuralLayer.cc ./src/utils.cc ./src/NeuralNetwork.cc
 	$(CXX) ./src/main.cc ./src/Neuron.cc ./src/ActivationFunction.cc ./src/NeuralLayer.cc ./src/NeuralNetwork.cc ./src/utils.cc $(FLAGS) -o ./bin/main 
+	cp ./bin/main ./a.out
 
 ./src/%.cc: ./includes/%.cc
 	%@
@@ -13,4 +14,4 @@ exec: ./bin/main
 .DEFAULT: exec
 
 CXX = g++
-FLAGS = -Iincludes -fpermissive -O0 -Wall -pg -g
+FLAGS = -Iincludes -fpermissive -O0 -Wall -pg -g -DNDEBUG
