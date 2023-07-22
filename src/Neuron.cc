@@ -47,20 +47,16 @@ double& Neuron::GetValue()
 // This will prcoess data
 void Neuron::ProcessData()
 {
-  if(m_connections.size() == 0){
-    throw std::logic_error("You have no connections on this neuron.");
-  }
+  // if(m_connections.size() == 0){
+  //   throw std::logic_error("You have no connections on this neuron.");
+  // }
 
   m_value = m_bias;
-  
-  // For each connection in connections, get the value from that neuron and multiply it by the weight
-  for (std::pair<Neuron *, double> connection : m_connections)
-  {
-    // std::cout << "Connections" << connection.second << " value " << connection.first->GetValue() << std::endl;
-    // The current value is equal to what the previous neruon has plus the weight value
-    // TODO:: Make this work with the new ProcessData() function, this will make it so that the neurons don't have to process the data each time
-    m_value += connection.first->GetValue() * connection.second;
+
+  for(int i = 0; i < m_connections.size(); i++){
+    m_value += m_connections.at(i).first->GetValue() * m_connections.at(i).second;
   }
+  
   m_value = m_activationFunction(m_value);
 }
 
@@ -84,7 +80,7 @@ void Neuron::SetBias(double bias){
 // Returns a string with data about the connections it has, including the number, the address of the neuron its connected to, as well as the value of the weight of the connection
 std::string Neuron::ConnectionsToString()
 {
-  std::string message = "CONNECTIONS:\n";
+  std::string message = "";
   int i = 0;
   for(std::pair<Neuron *, double> connection : m_connections){
     std::cout << "Neuron address of " << connection.first << " has a value of " << connection.first->GetValue() << " and the weight is " << connection.second << std::endl;

@@ -52,21 +52,20 @@ int main(int argc, char *argv[])
   long long s_t = now();
 
   NeuralNetwork nn = NeuralNetwork();
-  NeuralLayer layer1 = NeuralLayer(1, WeightGenerationType::FIXED);
-  NeuralLayer layer2 = NeuralLayer(500, WeightGenerationType::FIXED);
-  NeuralLayer layer3 = NeuralLayer(500, WeightGenerationType::FIXED);
-  NeuralLayer layer4 = NeuralLayer(500, WeightGenerationType::FIXED);
-  NeuralLayer layer5 = NeuralLayer(1, WeightGenerationType::FIXED);
+  NeuralLayer layer1 = NeuralLayer(1, WeightGenerationType::RANDOM);
+  NeuralLayer layer2 = NeuralLayer(500, WeightGenerationType::RANDOM);
+  NeuralLayer layer3 = NeuralLayer(500, WeightGenerationType::RANDOM);
+  NeuralLayer layer4 = NeuralLayer(500, WeightGenerationType::RANDOM);
+  NeuralLayer layer5 = NeuralLayer(1, WeightGenerationType::RANDOM);
   layer1.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer2.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer3.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer4.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer5.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
-
   nn(layer1)(layer2)(layer3)(layer4)(layer5);
   nn.Build();
   for(int i = 0; i < trainData.size(); i++){
-    std::cout << "Input: " << trainData.at(i) << "\tOutput: " << nn(trainData[0])[0] << std::endl;
+    std::cout << "Input: " << trainData.at(i) << "\tOutput: " << nn(trainData[i])[0] << std::endl;
   }
 
   long long e_t = now();
