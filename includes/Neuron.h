@@ -50,12 +50,12 @@ class Neuron{
 
     void operator()(double input);
 
+    // m_value is the value that the neuron will store after it is done after GetValue() is run
+    double m_value = 0;
  private:
     // Bias id the bias of the neuron, weights are stored in m_connections
     double m_bias = 0;
 
-    // m_value is the value that the neuron will store after it is done after GetValue() is run
-    double m_value = 0;
 
     // The activation function is the activation function that the neuron will run after it computes its value, it might be better
     //? Would storing the activation function in the layer be more efficient?

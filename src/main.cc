@@ -11,11 +11,11 @@
 
 // n3.SetActivationFunction(ActivationFunction::sigmoid);
 
-// assert(n.GetValue() == 0);
+// assert(n.m_value == 0);
 // n.SetValue(5);
 // n2.AddConnection(n, 5);
 // n2.ProcessData();
-// assert(n2.GetValue() == n2.GetConnections().at(0).second * n.GetValue() + n2.GetBias());
+// assert(n2.m_value == n2.GetConnections().at(0).second * n.m_value + n2.GetBias());
 // n3.AddConnection(n2, -0.1);
 std::vector<std::vector<double>> convertData(std::vector<double> input){
   std::vector<std::vector<double>> output;

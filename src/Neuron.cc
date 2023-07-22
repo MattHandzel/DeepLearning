@@ -22,8 +22,8 @@ void Neuron::AddConnection(Neuron neuron, double value)
 // This will add a vector of connections to the neruons connections.
 void Neuron::AddConnections(const std::vector<std::pair<Neuron*, double>>& connections){
   // || This can probably be done better than a for each loop
-  for(std::pair<Neuron*, double> connection : connections){
-    m_connections.push_back(connection);
+  for(int i = 0; i < connections.size(); i++){
+    m_connections.push_back(connections.at(i));
   }
 }
 
@@ -54,12 +54,8 @@ void Neuron::ProcessData()
   m_value = m_bias;
   
   // For each connection in connections, get the value from that neuron and multiply it by the weight
-  for (std::pair<Neuron *, double> connection : m_connections)
-  {
-    // std::cout << "Connections" << connection.second << " value " << connection.first->GetValue() << std::endl;
-    // The current value is equal to what the previous neruon has plus the weight value
-    // TODO:: Make this work with the new ProcessData() function, this will make it so that the neurons don't have to process the data each time
-    m_value += connection.first->GetValue() * connection.second;
+  for(int i = 0; i < m_connections.size(); i ++){
+    m_value += m_connections[i].first->m_value * m_connections[i].second;
   }
   m_value = m_activationFunction(m_value);
 }
@@ -87,7 +83,7 @@ std::string Neuron::ConnectionsToString()
   std::string message = "CONNECTIONS:\n";
   int i = 0;
   for(std::pair<Neuron *, double> connection : m_connections){
-    std::cout << "Neuron address of " << connection.first << " has a value of " << connection.first->GetValue() << " and the weight is " << connection.second << std::endl;
+    std::cout << "Neuron address of " << connection.first << " has a value of " << connection.first->m_value << " and the weight is " << connection.second << std::endl;
   }
   //! This can break if the size of m_connections is super big for some reason
   return message;
@@ -113,9 +109,9 @@ double derivative(Neuron n, double input)
 {
   static double h = 0.00000000001;
   n(input);
-  double value1 = n.GetValue();
+  double value1 = n.m_value;
   n(input - h);
-  double value2 = n.GetValue();
+  double value2 = n.m_value;
 
   return (value1 - value2) / h;
 }

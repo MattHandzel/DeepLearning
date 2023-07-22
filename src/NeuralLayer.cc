@@ -25,7 +25,7 @@ void NeuralLayer::ProcessLayer()
     for (int i = 0; i < m_neurons.size(); i++)
     {
         m_neurons[i].ProcessData();
-        // std::cout << "Neuron " << i << " has a value now of " << m_neurons[i].GetValue() << " and" << m_neurons[i].GetConnections().size() << " connections\n";
+        // std::cout << "Neuron " << i << " has a value now of " << m_neurons[i].m_value << " and" << m_neurons[i].GetConnections().size() << " connections\n";
     }
 }
 
@@ -54,7 +54,7 @@ std::vector<Neuron> &NeuralLayer::GetNeurons()
 std::vector<double> NeuralLayer::GetValues(){
     std::vector<double> values;
     for(int i = 0; i < m_neurons.size(); i++){
-        values.push_back(m_neurons.at(i).GetValue());
+        values.push_back(m_neurons.at(i).m_value);
     }
     return values;
 }
@@ -154,7 +154,7 @@ std::string NeuralLayer::ValuesToString()
     // for each neuron, get the value and concatenate it into one string
     for (Neuron n : m_neurons)
     {
-        message += "NEURON:\n\tVALUE:\t" + std::to_string(n.GetValue()) + "\n";
+        message += "NEURON:\n\tVALUE:\t" + std::to_string(n.m_value) + "\n";
     }
     return message;
 }
