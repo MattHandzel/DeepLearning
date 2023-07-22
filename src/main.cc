@@ -33,6 +33,7 @@ int MAX_INT = ~(1 << 31);
 int main(int argc, char *argv[])
 {
 
+
   if (argc != 2)
   {
     throw std::invalid_argument("Not right amount of args");
