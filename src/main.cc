@@ -48,11 +48,11 @@ int main(int argc, char *argv[])
   long long s_t = now();
 
   NeuralNetwork nn = NeuralNetwork();
-  NeuralLayer layer1 = NeuralLayer(1, WeightGenerationType::FIXED);
-  NeuralLayer layer2 = NeuralLayer(500, WeightGenerationType::FIXED);
-  NeuralLayer layer3 = NeuralLayer(500, WeightGenerationType::FIXED);
-  NeuralLayer layer4 = NeuralLayer(500, WeightGenerationType::FIXED);
-  NeuralLayer layer5 = NeuralLayer(1, WeightGenerationType::FIXED);
+  NeuralLayer layer1 = NeuralLayer(1, WeightGenerationType::RANDOM);
+  NeuralLayer layer2 = NeuralLayer(500, WeightGenerationType::RANDOM);
+  NeuralLayer layer3 = NeuralLayer(500, WeightGenerationType::RANDOM);
+  NeuralLayer layer4 = NeuralLayer(500, WeightGenerationType::RANDOM);
+  NeuralLayer layer5 = NeuralLayer(1, WeightGenerationType::RANDOM);
   layer1.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer2.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));
   layer3.SetActivationFunction(ActivationFunction(ActivationFunctionType::LINEAR, std::map<std::string, double>{{"slope", 1}}));

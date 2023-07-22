@@ -13,4 +13,4 @@ exec: ./bin/main
 .DEFAULT: exec
 
 CXX = g++
-FLAGS = -Iincludes -fpermissive -O0 -Wall -pg -g
+FLAGS = -Iincludes -fpermissive -O3 -Wall -pg -g
