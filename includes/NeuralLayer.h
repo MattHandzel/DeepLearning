@@ -48,6 +48,7 @@ public:
 
     NeuralLayer &GetPrevious();
 
+
 private:
     // m_layerSize is the size of the layer which determines the number of neurons
     int m_layerSize;

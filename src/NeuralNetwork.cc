@@ -50,7 +50,7 @@ void NeuralNetwork::Train(array<array<double>> trainData, array<array<double>> t
       array<double> output = this->operator()(trainData.at(dataIndex));
       double error = computeError(trainLabels.at(i), output);
       
-      // Do gradient discent
+      // Do gradient descent
     }
 
   }
