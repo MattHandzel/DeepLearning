@@ -15,7 +15,7 @@
 // n.SetValue(5);
 // n2.AddConnection(n, 5);
 // n2.ProcessData();
-// assert(n2.GetValue() == n2.GetConnections().at(0).second * n.GetValue() + n2.GetBias());
+// assert(n2.GetValue() == n2.GetConnections()[0].second * n.GetValue() + n2.GetBias());
 // n3.AddConnection(n2, -0.1);
 
 // array<array<double>> convertData(array<double> input){
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
   int runs = std::stoi(static_cast<std::string>(argv[1]));
 
   int nLayers = 2;
+  int dataSize = 10;
 
   array<double> trainData{100};
   for (int i = 0; i < trainData.size(); i++)

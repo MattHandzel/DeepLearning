@@ -30,13 +30,17 @@ void NeuralLayer::ProcessLayer()
     }
 }
 
+<<<<<<< HEAD
 
 void NeuralLayer::SetInput(array<double>& input)
+=======
+void NeuralLayer::SetInput(double input[])
+>>>>>>> a40b978e597d4636954daf1b82bedab2fd14b19b
 {
     // If the size of the input is not the same as the layer size then it will throw an exception
-    if (input.size() != m_layerSize)
+    if ((sizeof(input)/sizeof(*input)) != m_layerSize)
     {
-        throw std::invalid_argument("Input (size: " + std::to_string(input.size()) + " )" + "must be equal in size to layer size (size: " + std::to_string(m_layerSize) + ") ");
+        throw std::invalid_argument("Input (size: " + std::to_string((sizeof(input)/sizeof(*input))) + " )" + "must be equal in size to layer size (size: " + std::to_string(m_layerSize) + ") ");
     }
 
     // Set the value of the neurons in the layer to the inputs
@@ -95,7 +99,8 @@ void NeuralLayer::SetWeights(array<Weights>& weights){
     {
         for (int b = 0; b < m_previous->GetLayerSize(); b++)
         {
-            m_neurons.at(i).SetWeight(b, weights.at(i).at(b)); // generateRandomNumber(1, -1)
+            m_neurons.at(i).SetWeight(b, weights[i][b]); // generateRandomNumber(1, -1)
+            assert(weights[i][b] > -100 && weights[i][b] < 100);
             
         }
     }
@@ -103,7 +108,7 @@ void NeuralLayer::SetWeights(array<Weights>& weights){
 
 void NeuralLayer::SetBiases(array<double>& baises){
     for(int i = 0; i < m_layerSize; i++){
-        m_neurons.at(i).SetBias(baises.at(i));
+        m_neurons.at(i).SetBias(baises[i]);
     }
 }
 
