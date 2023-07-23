@@ -82,7 +82,7 @@ void NeuralLayer::ConnectLayer(NeuralLayer& other, const array<Weights>& weights
     {
         for (int b = 0; b < other.GetLayerSize(); b++)
         {
-            m_neurons.at(i).AddConnection(std::pair<Neuron *, double>(&(other.m_neurons.at(b)), weights.at(i).at(b))); // generateRandomNumber(1, -1)
+            m_neurons.at(i).AddConnection(&other.m_neurons.at(b), weights.at(i).at(b)); // generateRandomNumber(1, -1)
         }
     }
 }
@@ -172,7 +172,7 @@ int sumConnections(NeuralLayer& layer)
     int sum = 0;
     for (int i = 0; i < layer.GetLayerSize(); i++)
     {
-        sum += layer.GetNeurons()[i].m_connections.size();
+        sum += layer.GetNeurons()[i].m_connections_neurons.size();
     }
     return sum;
 }

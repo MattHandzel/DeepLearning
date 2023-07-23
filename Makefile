@@ -14,4 +14,4 @@ exec: ./bin/main
 .DEFAULT: exec
 
 CXX = g++
-FLAGS = -Iincludes -fpermissive -O3 -Wall -pg -g -DNDEBUG
+FLAGS = -Iincludes -fpermissive -O2 -Wall -pg -g -DNDEBUG -fopenmp-simd -fopt-info-vec-all

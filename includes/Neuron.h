@@ -13,7 +13,7 @@ class Neuron{
 
     // This allows neurons to connect to each other, you pass in a neuron and the value of the weight of the connection
     void AddConnection(const std::pair<Neuron*, double>& connection);
-    void AddConnection(Neuron neuron, double weight);
+    void AddConnection(Neuron* neuron, double weight);
     void AddConnections(std::vector<std::pair<Neuron*, double>>& connections);
     void SetWeight(int index, double newWeight);
     void Neuron::SetBias(double bias);
@@ -33,15 +33,16 @@ class Neuron{
     // Sets the value of m_value
     void SetValue(double value);
 
-    std::vector<std::pair<Neuron *, double>> GetConnections(){
-      return m_connections;
+    std::vector<Neuron*> GetConnections(){
+      return m_connections_neurons;
     }
 
 
     // TODO:: Make m_connections private and then make a function that returns m_connections (make sure this doesn't screw anything else up)
     // TODO:: Learn about passing objects by referecne and how pointers work
     // This vector holds the connections the neuron has, it is in the public
-    std::vector<std::pair<Neuron *, double>> m_connections;
+    std::vector<Neuron*> m_connections_neurons;
+    std::vector<double> m_connections_weights;
 
     // Returns a string with data about the connections it has, including the number, the address of the neuron its connected to, as well as the value of the weight of the connection
     std::string ConnectionsToString();
