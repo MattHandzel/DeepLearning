@@ -5,6 +5,7 @@
 #include <future>
 #include "NeuralNetwork.h"
 #include <set>
+
 // Neuron n = Neuron(10);
 // Neuron n2 = Neuron(5);
 // Neuron n3 = Neuron(-10);

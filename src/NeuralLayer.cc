@@ -80,7 +80,8 @@ void NeuralLayer::ConnectLayer(NeuralLayer& other, const std::vector<std::vector
     {
         for (int b = 0; b < other.GetLayerSize(); b++)
         {
-            m_neurons.at(i).AddConnection(std::pair<Neuron *, double>(&(other.m_neurons.at(b)), weights.at(i).at(b))); // generateRandomNumber(1, -1)
+            std::cout << b << std::endl;
+            m_neurons.at(i).AddConnection(&(other.m_neurons.at(b)), weights.at(i).at(b)); // generateRandomNumber(1, -1)
         }
     }
 }
@@ -94,7 +95,6 @@ void NeuralLayer::SetWeights(const std::vector<std::vector<double>>& weights){
         for (int b = 0; b < m_previous->GetLayerSize(); b++)
         {
             m_neurons.at(i).SetWeight(b, weights.at(i).at(b)); // generateRandomNumber(1, -1)
-            
         }
     }
 }
@@ -164,13 +164,18 @@ NeuralLayer& NeuralLayer::GetPrevious()
     return *m_previous;
 }
 
+std::vector<double> NeuralLayer::FindGradient(){
+    
+    return std::vector<double>();
+}
+
 // Find the total connections a layer has
 int sumConnections(NeuralLayer& layer)
 {
     int sum = 0;
     for (int i = 0; i < layer.GetLayerSize(); i++)
     {
-        sum += layer.GetNeurons()[i].m_connections.size();
+        sum += layer.GetNeurons()[i].m_neural_connections.size();
     }
     return sum;
 }

@@ -12,6 +12,7 @@
 #include <limits>
 #include <map>
 #include <thread>
+#include "Eigen/Core"
 
 #include <cassert>
 
