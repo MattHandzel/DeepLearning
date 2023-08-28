@@ -27,6 +27,9 @@ struct array
   array() : m_size(0){
 
   }
+  ~array(){
+    delete data;
+  }
   void init(int size){
     data = new T[size];
     m_size = size;
@@ -96,6 +99,7 @@ struct Weights{
   {
     weights.init(other.m_size);
     weights = other;
+    return weights;
   }
 };
 

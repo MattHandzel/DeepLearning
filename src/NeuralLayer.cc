@@ -30,12 +30,8 @@ void NeuralLayer::ProcessLayer()
     }
 }
 
-<<<<<<< HEAD
 
 void NeuralLayer::SetInput(array<double>& input)
-=======
-void NeuralLayer::SetInput(double input[])
->>>>>>> a40b978e597d4636954daf1b82bedab2fd14b19b
 {
     // If the size of the input is not the same as the layer size then it will throw an exception
     if ((sizeof(input)/sizeof(*input)) != m_layerSize)
